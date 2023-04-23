@@ -1,18 +1,23 @@
 import Express  from "express";
+import router from "./routes/index.js";
+import db from "./utils/mongoose.js";
+import bodyParser from "body-parser";
 
 const PORT=3000;
 const app = Express();
 
-app.get('/',(req,res)=>{
-    res.send('<h1>Its the backend</h1>');
-})
-app.get('/about',(req,res)=>{
-    res.send('<h1>Its the about</h1>');
-})
-app.listen(PORT,()=>{
-    console.log(`App is listening to http://localhost:${PORT}`);
-})
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(Express.json());
+
+
+app.use('/',router);
+db();
+
+  // app is listening...
+app.listen(PORT,()=>{
+  console.log(`App is listening to http://localhost:${PORT}/get-posts`);
+})
 
 // Export the Express API
 export default app;
