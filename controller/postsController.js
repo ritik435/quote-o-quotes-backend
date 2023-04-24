@@ -1,13 +1,15 @@
 import Post from "../model/postModel.js";
 import ApiResponse from "../model/apiResponseModel.js";
 export var home=async (req,res)=>{
-    res.send("<h1>this is homepage</h1>");
+  res.set('Access-Control-Allow-Origin', '*');
+    res.json({"message":"Welcome to homepage"});
 }
 
 export var getAllPost=async (req,res)=>{
   const posts = await Post.find({});
   const apiResponse=new ApiResponse({"status":200, "description":"succesfully done","result":posts})
   try {
+    res.set('Access-Control-Allow-Origin', '*');
     res.send(apiResponse);
   } catch (error) {
     res.send(new ApiResponse({"status":500, "description":"unsuccesfully done"}))
@@ -23,6 +25,7 @@ export var getPost=async (req,res)=>{
   if(post!=null){
 
     try {
+      res.set('Access-Control-Allow-Origin', '*');
       res.send(apiResponse);
     } catch (error) {
       res.json({"status":500, "description":"Coulnot able to find "})
@@ -40,6 +43,7 @@ export var postPost=async(req,res)=>{
 
     try {
       await post.save();
+      res.set('Access-Control-Allow-Origin', '*');
       res.send(apiResponse);
     } catch (error) {
       res.json({"status":500, "description":"Quote is not posted"});
@@ -55,6 +59,7 @@ export var deletePost=async (req,res)=>{
   if(post!=null){
    
   try {
+    res.set('Access-Control-Allow-Origin', '*');
     res.json({"status":200, "description":`Post is successfully deleted for ${id}`});
   } catch (error) {
     res.json({"status":500, "description":"Could not find this post"});
